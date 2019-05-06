@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import styled from "styled-components";
+import { useSetUser } from "../userContext";
 
 const Container = styled.div``;
 
@@ -15,11 +16,15 @@ export default () => {
     email: "",
     password: ""
   });
+  const setUser = useSetUser();
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const request = await Auth.signIn(form.email, form.password);
       console.log(request);
+      setUser({
+        isLoggedIn: true
+      });
     } catch (e) {
       console.log(e);
     }
