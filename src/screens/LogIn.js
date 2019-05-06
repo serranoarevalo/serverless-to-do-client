@@ -42,12 +42,14 @@ export default () => {
           value={form.email}
           placeholder="Email"
           name="email"
+          type="email"
         />
         <Input
           onChange={onChange}
           value={form.password}
           placeholder="Password"
           name="password"
+          type="password"
         />
         <Button>Log In</Button>
       </Form>

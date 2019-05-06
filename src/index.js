@@ -4,6 +4,7 @@ import Amplify from "aws-amplify";
 import { HashRouter as Router } from "react-router-dom";
 import App from "./components/App";
 import awsConfig from "./awsConfig";
+import { UserContextProvider } from "./userContext";
 
 Amplify.configure({
   Auth: {
@@ -33,7 +34,9 @@ Amplify.configure({
 
 ReactDOM.render(
   <Router>
-    <App />
+    <UserContextProvider>
+      <App />
+    </UserContextProvider>
   </Router>,
   document.getElementById("root")
 );

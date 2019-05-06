@@ -4,14 +4,16 @@ import GlobalStyles from "./GlobalStyles";
 import Home from "../screens/Home";
 import Nav from "./Nav";
 import LogIn from "../screens/LogIn";
+import { useUser } from "../userContext";
 
 function App() {
+  const user = useUser();
   return (
     <>
       <Nav />
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/log-in" component={LogIn} />
+        {!user.isLoggedIn && <Route exact path="/log-in" component={LogIn} />}
         <Redirect from="*" to="/" />
       </Switch>
       <GlobalStyles />
