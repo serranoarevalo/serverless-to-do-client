@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Auth } from "aws-amplify";
 import styled from "styled-components";
 import { useSetUser } from "../userContext";
+import useInput from "../hooks/useInput";
 
 const Container = styled.div``;
 
@@ -12,15 +13,13 @@ const Input = styled.input``;
 const Button = styled.button``;
 
 export default () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: ""
-  });
-  const setUser = useSetUser();
+  const email = useInput("");
+  const password = useInput("");
+  const setUser = useSetUser("");
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      await Auth.signIn(form.email, form.password);
+      await Auth.signIn(email.value, password.password);
       setUser({
         isLoggedIn: true
       });
@@ -29,32 +28,23 @@ export default () => {
       console.log(e);
     }
   };
-  const onChange = e => {
-    const {
-      target: { value, name }
-    } = e;
-    setForm(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-  console.log(form);
+
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
         <Input
-          onChange={onChange}
-          value={form.email}
+          {...email}
           placeholder="Email"
           name="email"
           type="email"
+          required={true}
         />
         <Input
-          onChange={onChange}
-          value={form.password}
+          {...password}
           placeholder="Password"
           name="password"
           type="password"
+          required={true}
         />
         <Button>Log In</Button>
       </Form>

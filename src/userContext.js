@@ -35,6 +35,5 @@ export const useUser = () => {
 
 export const useSetUser = () => {
   const { replaceState: setUser } = useContext(UserContext);
-  console.log(setUser);
   return setUser;
 };

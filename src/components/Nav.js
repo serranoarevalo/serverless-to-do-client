@@ -16,6 +16,7 @@ export default () => {
     setUser({
       isLoggedIn: false
     });
+    localStorage.removeItem("loggedIn");
   };
   return (
     <Nav>
