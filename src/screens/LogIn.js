@@ -20,11 +20,11 @@ export default () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const request = await Auth.signIn(form.email, form.password);
-      console.log(request);
+      await Auth.signIn(form.email, form.password);
       setUser({
         isLoggedIn: true
       });
+      localStorage.setItem("loggedIn", true);
     } catch (e) {
       console.log(e);
     }

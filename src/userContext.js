@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { Auth } from "aws-amplify";
 
-const getCognitoLs = () => localStorage.getItem("amplify-signin-with-hostedUI");
+const getCognitoLs = () => localStorage.getItem("loggedIn");
 
 const UserContext = createContext();
 
@@ -20,8 +20,9 @@ export const UserContextProvider = ({ children }) => {
     };
     getUser();
   }, []);
+  const replaceState = newState => setUser(prev => ({ ...prev, ...newState }));
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, replaceState }}>
       {children}
     </UserContext.Provider>
   );
@@ -33,6 +34,7 @@ export const useUser = () => {
 };
 
 export const useSetUser = () => {
-  const { setUser } = useContext(UserContext);
+  const { replaceState: setUser } = useContext(UserContext);
+  console.log(setUser);
   return setUser;
 };
