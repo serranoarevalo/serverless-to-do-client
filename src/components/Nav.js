@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useUser, useSetUser } from "../userContext";
 import { Auth } from "aws-amplify";
 
-const Nav = styled.nav``;
+const Nav = styled.ul``;
 
 const SLink = styled(Link)``;
 
@@ -20,14 +20,28 @@ export default () => {
   };
   return (
     <Nav>
+      <li>
+        <SLink to="/">Home</SLink>
+      </li>
       {user.isLoggedIn ? (
-        <SLink to="/log-out" onClick={handleLogOut}>
-          Log Out
-        </SLink>
+        <>
+          <li>
+            <SLink to="/create">Create</SLink>
+          </li>
+          <li>
+            <SLink to="/log-out" onClick={handleLogOut}>
+              Log Out
+            </SLink>
+          </li>
+        </>
       ) : (
         <>
-          <SLink to="/log-in">Log In</SLink>
-          <SLink to="/sign-up">Sign Up</SLink>
+          <li>
+            <SLink to="/log-in">Log In</SLink>
+          </li>
+          <li>
+            <SLink to="/sign-up">Sign Up</SLink>
+          </li>
         </>
       )}
     </Nav>

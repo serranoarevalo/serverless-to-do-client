@@ -51,6 +51,7 @@ export default () => {
 
   return (
     <Container>
+      <h1>Sign Up</h1>
       {confirming ? (
         <Form onSubmit={handleConfirm}>
           <Input

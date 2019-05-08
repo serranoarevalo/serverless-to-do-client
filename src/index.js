@@ -21,13 +21,11 @@ Amplify.configure({
   },
   API: {
     endpoints: [
-      [
-        {
-          name: "notes",
-          endpoint: awsConfig.apiGateway.URL,
-          region: awsConfig.apiGateway.REGION
-        }
-      ]
+      {
+        name: "notes",
+        endpoint: awsConfig.apiGateway.URL,
+        region: awsConfig.apiGateway.REGION
+      }
     ]
   }
 });

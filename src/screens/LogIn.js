@@ -18,8 +18,11 @@ export default () => {
   const setUser = useSetUser("");
   const handleSubmit = async e => {
     e.preventDefault();
+    if (email.value !== "" && password.value !== "") {
+      return;
+    }
     try {
-      await Auth.signIn(email.value, password.password);
+      await Auth.signIn(email.value, password.value);
       setUser({
         isLoggedIn: true
       });
@@ -31,6 +34,7 @@ export default () => {
 
   return (
     <Container>
+      <h1>Log In</h1>
       <Form onSubmit={handleSubmit}>
         <Input
           {...email}
