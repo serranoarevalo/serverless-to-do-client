@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useUser } from "../userContext";
 import { API } from "aws-amplify";
+import { Link } from "react-router-dom";
+import { useUser } from "../userContext";
 
 export default () => {
   const [loading, setLoading] = useState(true);
@@ -8,8 +9,12 @@ export default () => {
   const user = useUser();
   useEffect(() => {
     const getNotes = async () => {
-      const notes = await API.get("notes", "/notes");
-      setNotes(notes);
+      try {
+        const notes = await API.get("notes", "/notes");
+        setNotes(notes);
+      } catch (e) {
+        console.log(e);
+      }
       setLoading(false);
     };
     getNotes();
@@ -24,7 +29,9 @@ export default () => {
         ) : (
           <ul>
             {notes.map(note => (
-              <li key={note.noteId}>👉🏻 {note.content}</li>
+              <li key={note.noteId}>
+                👉🏻 <Link to={`note/${note.noteId}`}>{note.content}</Link>{" "}
+              </li>
             ))}
           </ul>
         )
