@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import useInput from "../hooks/useInput";
 import { API } from "aws-amplify";
+import s3Upload from "../libs/s3Upload";
 
 const Container = styled.div``;
 
@@ -17,18 +18,22 @@ export default ({ history }) => {
   const [file, setFile] = useState();
   const handleSubmit = async e => {
     e.preventDefault();
-    if (content.value === "" || content.value.length < 10) {
+    if (content.value === "" || content.value.length < 10 || !file) {
       return;
     } else {
       setLoading(true);
       try {
-        await API.post("notes", "/notes", {
-          body: {
-            content: content.value
-          }
-        });
-        setLoading(false);
-        history.push("/");
+        const fileName = await s3Upload(file);
+        if (fileName) {
+          await API.post("notes", "/notes", {
+            body: {
+              attachment: fileName,
+              content: content.value
+            }
+          });
+          setLoading(false);
+          history.push("/");
+        }
       } catch (e) {
         console.log(e);
         setLoading(false);
